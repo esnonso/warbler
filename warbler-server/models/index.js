@@ -9,4 +9,4 @@ mongoose.connect('mongodb://localhost/todosBackend-api', {
 
 mongoose.Promise = Promise;
 
-module.exports.User = require('./user')
+module.exports.User = require('./user');
