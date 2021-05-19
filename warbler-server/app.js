@@ -4,11 +4,15 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const errorHandler = require("./handlers/error");
 const authRoutes = require('./routes/auth')
+const messageRoutes = require("./routes/message")
+const { loginIsRequired, ensureCorrectUser} = require("./middleware/auth")
+const db = require('./models')
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}))
-app.get("/", (req, res) => res.send("Connected"))
+
 app.use("/api/auth", authRoutes);
+app.use('/api/users/:id/message', loginIsRequired, ensureCorrectUser, messageRoutes)
 
 //server all routes got through here error handlers
 app.use((req, res, next) => {
@@ -17,7 +21,21 @@ app.use((req, res, next) => {
     next(err)
 })
 
- // Authentication routes
+app.get("/api/messages", loginIsRequired, function (req, res, next) {
+    try{
+        let messages = db.Message.find()
+        .sort({createdAt: "desc"})
+        .populate("user", {
+            username:true,
+            profileImageUrl: true
+        })
+        return res.status(200).json(messages)
+    }catch(err){
+        return next(err)
+    }
+})
+
+ // ERROR handler
 app.use(errorHandler);
 
 app.listen("3001", ()=> console.log("server has started..."))
