@@ -1,67 +1,68 @@
 const db = require('../models');
 const jwt = require('jsonwebtoken');
 
+const seeds = async function seeds() {
+    await db.User.remove({})
+    .then( await db.Message.remove({}))
+    console.log("Cleared")
+}
+
+//seeds() Delete everything in the database
+
 exports.signin = async function(req, res, next){
     try{
         let user = await db.User.findOne({
-        email:req.body.email
+            email:req.body.email
         });
-        let {id, username, profileImageUrl} = user
+        let { id, username, profileImageUrl} = user
         let isMatch = await user.comparePassword(req.body.password)
-        if (isMatch) {
+        if(isMatch){
             let token = jwt.sign({
                 id,
                 username,
-                profileImageUrl
-            }, 
-            process.env.SECRET_KEY
-        );
-        return res.status(200).json({
-            id,
-            username,
-            profileImageUrl,
-            token
-        })
-        }else{
+                profileImageUrl,
+            }, process.env.SECRET_KEY)
+            return res.status(200).json({
+                id,
+                username,
+                profileImageUrl,
+                token
+            })
+        }else {
             return next({
                 status:400,
-                message: "Invalid email or password"
+                message:"invalid username or password"
             })
         }
     }catch(err){
         return next({
             status:400,
-            message: "Invalid email or password"
-        })
+            message:"invalid username or password"
+        }
+        )
     }
-}
+  }
 
 exports.signup = async function(req, res, next){
     try{
         //create a user
         let user = await db.User.create(req.body)
-        //values that are passed to the token that when i decode them I can see them
-        let {id, username, profileImageUrl} = user
-        //create a token
+        const { id,  username,  profileImageUrl} = user
         let token = jwt.sign({
             id,
             username,
-            profileImageUrl
-        },
-        //pass in a secret key
-        process.env.SECRET_KEY
-        );
+            profileImageUrl,
+        }, process.env.SECRET_KEY)
         return res.status(200).json({
             id,
             username,
             profileImageUrl,
-            token
-        })
-        
+            token,
+        }) 
     }catch(err){
         // code if validation fails
         if(err.code === 11000){
-            err.message = "Sorry That username and/or password is taken"
+            err.message = "Sorry That username and/or email is taken"
         }
         return next({
             status:400,

@@ -15,7 +15,6 @@ const userSchema = new mongoose.Schema({
     password:{
         type: String,
         required: true,
-        unique: true
     },
     profileImageUrl:{
         type: String
@@ -25,6 +24,8 @@ const userSchema = new mongoose.Schema({
         ref:"Message"
     }]
 })
+
+
 
 userSchema.pre("save", async function(next){
     try{
@@ -41,12 +42,13 @@ userSchema.pre("save", async function(next){
 
 userSchema.methods.comparePassword = async function(candidatePassword, next){
     try{
-        let isMatch = await bcrypt.compare(candidatePassword, this.password);
-        return isMatch;
+        let isMatch = await bcrypt.compare(candidatePassword, this.password); 
+        return isMatch
     }catch(err){
         next(err)
     }
 }
 const User = mongoose.model("User", userSchema);
+
 
 module.exports = User;

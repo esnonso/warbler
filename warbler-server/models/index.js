@@ -2,8 +2,7 @@ const mongoose = require('mongoose');
 mongoose.set("debug", true)
 mongoose.connect('mongodb://localhost/todosBackend-api', {
     useNewUrlParser: true,
-    useUnifiedTopology: true,
-    keepAlive:true,
+    useUnifiedTopology: true 
     });
 
 mongoose.Promise = Promise;
