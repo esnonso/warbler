@@ -22,17 +22,26 @@ export default class AuthForm extends Component {
         const authType = this.props.signUp ? "signup": "signin"; //if this.props is signup then signup, otherwise sign in
         this.props.onAuth(authType, this.state)
         .then(()=> {
-            console.log("LOGGED IN")
+            this.props.history.push('/')
+        })
+        .catch((e) => {
+            return 
         })
     }
+
     render(){
         const { email, password, profileImageUrl, username } = this.state
-        const { heading, buttonText, signUp} = this.props
+        const { heading, buttonText, signUp, errors, history, removeError} = this.props
+        history.listen(()=> removeError())
         return(
           <div className="d-flex justify-content-center" >
               <div className='container-fluid'  >
                   <form onSubmit={this.handleSubmit} style={{width:"500px", margin:0, margin:"auto"}} >
                       <h2>{heading}</h2>
+                     {errors.message && (
+                      <div className=" alert alert-danger">{errors.message}</div>
+                      ) }
+
                       <label htmlFor="email">Email</label>
                       <input className="form-control"
                         type="text"

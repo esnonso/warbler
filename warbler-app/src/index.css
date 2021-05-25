@@ -47,6 +47,9 @@ img {
 .navbar p:hover{
   color: white;
 }
+.navbar a:hover{
+  cursor: pointer;
+}
 .home {
   width: 100vw;
   height: 100vh;
@@ -75,4 +78,28 @@ img {
 }
 .home h4{
   font-size: 50px;
+}
+
+#messages .list-group-item {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 20px 40px;
+  list-style-type: none;
+  margin:3px;
+}
+
+.list-group-item:hover{
+  background-color: rgb(235, 235, 235);
+}
+
+.list-group-item img {
+  height: 80px;
+  width: 100px;
+}
+
+.panel-default img{
+  margin: 10px ;
+  height:200px;
+  width:200px;
 }

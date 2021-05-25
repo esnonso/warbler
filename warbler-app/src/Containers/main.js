@@ -3,31 +3,45 @@ import { connect } from 'react-redux'
 import Homepage from "../Components/homepage";
 import AuthForm from '../Components/AuthForm'
 import { authUser } from '../store/actions/auth'
+import { removeError } from '../store/actions/error';
+import withAuth from '../hocs/withAuth'
+import MessageForm from '../Containers/messageForm'
 
 
 const Main = props => {
-    const { authUser} = props;
+    const { authUser, errors, currentUser} = props;
     return(
         <Switch>
-        <Route exact path ="/" render = {props => <Homepage {...props}/>} />
+        <Route exact path ="/" render = {props => <Homepage currentUser={currentUser} {...props}/>} />
         <Route exact path ="/signin" render= {props => {
             return(
-                <AuthForm onAuth={authUser} buttonText="Log In" heading="Welcome back" {...props}/>
+                <AuthForm onAuth={authUser}
+                        errors={errors}
+                        buttonText="Log In"
+                        removeError={removeError}
+                        heading="Welcome back" {...props}/>
             )
         }}/>
         <Route exact path ="/signup" render= {props => {
             return(
-                <AuthForm onAuth={authUser} signUp buttonText="sign Up" heading="Join Warbler Today" {...props}/>
+                <AuthForm onAuth={authUser}
+                    errors={errors}
+                    signUp buttonText="sign Up"
+                    removeError={removeError}
+                    heading="Join Warbler Today" {...props}/>
             )
         }}/>
+
+        <Route path="/users/:id/messages/new" component={withAuth(MessageForm)} />
     </Switch>
     ) 
 }
 
 function mapStateToProps(state){
     return{
-        currentUser: state.currentUser
+        currentUser: state.currentUser,
+        errors:state.errors
     }
 }
 
-export default withRouter(connect(mapStateToProps, { authUser })(Main))
+export default withRouter(connect(mapStateToProps, { authUser, removeError } )(Main))
