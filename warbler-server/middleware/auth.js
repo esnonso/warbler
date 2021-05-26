@@ -37,24 +37,23 @@ exports.ensureCorrectUser =  function(req, res, next){
                 const token = authHeader.split(' ')[1];
                 jwt.verify(token, process.env.SECRET_KEY, (err, user)=> {
                     if(err){
-                        return res.status(403)
+                       return res.status(403)
                     }
-                   
-                   if(req.user.id === req.params.id){
                     req.user = user
+                   if(req.user.id === req.params.id){
                        next()
                    }
                 })
             }else{
                 return next({
                     status:403,
-                    message:"You are not properly logged in"
+                    message:"Unauthorized"
                 })
             }
     }catch(e){
         return next({
-            status:401,
-            message:e.message
+            status:403,
+            message:"Unauthorized"
         })
     }
 }

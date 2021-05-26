@@ -22,7 +22,7 @@ exports.createMessage = async function(req, res, next){
 
 exports.getMessage = async function(req, res, next){
    try{
-        let message = await db.User.findById(req.params.message._id)
+        let message = await db.User.findById(req.params.message_id)
         res.status(200).json({
             message
         })
@@ -31,11 +31,13 @@ exports.getMessage = async function(req, res, next){
    }
 }
 
-exports.removeMessage = async function(req, res, next){
+exports.removeMessage =  async function(req, res, next){
+    //const message_id = req.params.message_id
     try{
-        let foundMessage = await db.User.findById(req.params.message._id)
-        await foundMessage.remove()
-        return res.status(200).json({foundMessage})
+      let foundMessage =  await db.Message.findById(req.params.message_id)
+     await foundMessage.remove()
+    //console.log(foundMessage)
+        return res.status(200).json({message: "Deleted"})
     }catch(err){
         next(err)
     }

@@ -4,7 +4,7 @@ const { createMessage, getMessage, removeMessage } = require('../handlers/messag
 
 router.route('/').post(createMessage)
 router.route('/:message_id')
-.get(getMessage).
-delete(removeMessage)
+.get(getMessage)
+.delete(removeMessage)
 
 module.exports = router

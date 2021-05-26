@@ -5,14 +5,27 @@ import { apiCall } from '../../services/api';
 const loadMessages = messages => ({
     type:LOAD_MESSAGES,
     messages
-})
+});
+
+export const remove = id => ({
+    type: REMOVE_MESSAGES,
+    id
+});
+
+ export const removeMessage = (user_id, message_id) => {
+    return dispatch => {
+        return apiCall("delete", `http://localhost:3001/api/users/${user_id}/message/${message_id}`)
+        .then(()=> dispatch(removeMessage(message_id)))
+        .catch(err => dispatch(addError(err.message)))
+    }
+}
 
 export const fetchMessages =  ()=> {
     //debugger
     return dispatch => {
         return apiCall("get", 'http://localhost:3001/api/messages')
         .then(res =>  dispatch(loadMessages(res)))
-        .catch(err => addError(err.message))
+        .catch(err => dispatch(addError(err.message)))
     }
 }
 

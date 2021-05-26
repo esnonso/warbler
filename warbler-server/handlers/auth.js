@@ -3,11 +3,11 @@ const jwt = require('jsonwebtoken');
 
 const seeds = async function seeds() {
     await db.User.remove({})
-    .then( await db.Message.remove({}))
+    await db.Message.remove({})
     console.log("Cleared")
 }
 
-//seeds() Delete everything in the database
+ //seeds()//Delete everything in the database
 
 exports.signin = async function(req, res, next){
     try{
