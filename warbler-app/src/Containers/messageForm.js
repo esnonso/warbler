@@ -19,19 +19,24 @@ class MessageForm extends Component {
     }
     render(){
         return(
+         <div className="container">
             <form onSubmit={this.handleNewMessage}>
                 {this.props.errors.message && (
                     <div className="alert alert-danger">{this.props.errors}</div>
                 )}
-
-                <input type="text"
+            <label className="label">
+                <input style={{height: "100px"}}
+                     type="text"
                     className="form-control"
                     value={this.state.message}
                     onChange={e => this.setState({ message: e.target.value })}
                  />
-                <button className="btn btn-success" type="submit">Send my message</button>
-                
+            </label>
+            <p>
+                <button className="btn btn-success" type="submit">Send my message</button>  
+            </p>
             </form>
+            </div>
         )
     }
 }
