@@ -42,18 +42,18 @@ exports.ensureCorrectUser =  function(req, res, next){
                     req.user = user
                    if(req.user.id === req.params.id){
                        next()
-                   }
-                })
-            }else{
-                return next({
-                    status:403,
-                    message:"Unauthorized"
-                })
+                   }else{
+                    return next({
+                        status:403,
+                        message:"Unauthorized"
+                    })
+                }
+                }) 
             }
-    }catch(e){
+    }catch(err){
         return next({
             status:403,
-            message:"Unauthorized"
+            message:err
         })
     }
 }
