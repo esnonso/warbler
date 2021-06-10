@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Container, Form } from 'react-bootstrap';
 
 export default class AuthForm extends Component {
     constructor(props){
@@ -30,27 +31,27 @@ export default class AuthForm extends Component {
     }
 
     render(){
-        const { email, password, profileImageUrl, username } = this.state
+        const { email,  profileImageUrl, username } = this.state
         const { heading, buttonText, signUp, errors, history, removeError} = this.props
         history.listen(()=> removeError())
         return(
-          <div className="d-flex justify-content-center" >
-              <div className='container-fluid'  >
-                  <form onSubmit={this.handleSubmit} style={{width:"500px", margin:0, margin:"auto"}} >
+            <Container>
+                  <Form onSubmit={this.handleSubmit} style={{width:"500px", margin:0, margin:"auto"}} >
+                      <Form.Group>
                       <h2>{heading}</h2>
                      {errors.message && (
                       <div className=" alert alert-danger">{errors.message}</div>
                       ) }
 
-                      <label htmlFor="email">Email</label>
+                      <Form.Label >Email</Form.Label>
                       <input className="form-control"
-                        type="text"
+                        type="email"
                         id="email" 
                         name="email"
                         onChange={this.handleChange} 
                         value={email} />
                        
-                      <label htmlFor="password">Password</label>
+                       <Form.Label >Password</Form.Label>
                       <input className="form-control"
                         type="password"
                         id="password" 
@@ -59,7 +60,7 @@ export default class AuthForm extends Component {
                        />
                        {signUp && (
                            <div>
-                                <label htmlFor="username">username</label>
+                                <Form.Label >Username</Form.Label>
                                 <input className="form-control"
                                 type="text"
                                 id="username" 
@@ -67,7 +68,7 @@ export default class AuthForm extends Component {
                                 onChange={this.handleChange} 
                                 value={username} />
 
-                                <label htmlFor="profileImageUrl">Image</label>
+                                <Form.Label >Profile Image Url</Form.Label>
                                 <input className="form-control"
                                 type="text"
                                 id="profileImageUrl" 
@@ -81,9 +82,9 @@ export default class AuthForm extends Component {
                        <button type="submit" className="btn btn-primary btn-block btn-lg" style={{marginTop: "10px"}}>
                            {buttonText}
                        </button>
-                  </form>
-              </div>
-          </div> 
+                    </Form.Group>
+                  </Form>
+          </Container>
         )
     }
 }

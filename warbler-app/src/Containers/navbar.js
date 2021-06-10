@@ -1,40 +1,34 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { logout } from '../store/actions/auth'
-import logo from '../images/warbler-logo.png'
+import { logout } from '../store/actions/auth';
+import { Navbar, Nav} from 'react-bootstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faDove } from '@fortawesome/free-solid-svg-icons';
 
-class Navbar extends Component {
+class NavbarComponent extends Component {
         logout = e => {
             e.preventDefault();
             this.props.logout()
         }
+        navlink(){
+            return 
+        }
     render(){
         return(
-            <nav className="navbar navbar-inverse">
-                <div className="container-fluid">
-                    <div className="navbar-header">
-                    <Link to="/" className="navbar-brand">
-                        <p><img src={logo} alt="Warbler"></img>Warbler</p>
-                    </Link>
-                </div>
+            <Navbar variant="dark" expand="lg">
+                <Navbar.Brand href="/"><h3><FontAwesomeIcon icon={faDove} size="2x"/>Warbler</h3></Navbar.Brand>
                 {this.props.currentUser.isAuthenticated ? (
-                    <ul className="nav navbar-nav navbar-right">
-                        <li>
-                            <Link to={`/users/${this.props.currentUser.user.id}/messages/new`}>New Message</Link>
-                        </li>
-                        <li>
-                            <a  onClick={this.logout}>Logout :{this.props.currentUser.user.username}</a>
-                        </li>
-                    </ul>
+                    <Nav className="ms-auto">
+                        <Nav.Link href={`/users/${this.props.currentUser.user.id}/messages/new`}><p>New Message</p></Nav.Link>
+                        <Nav.Link onClick={this.logout}><p>Logout :{this.props.currentUser.user.username}</p></Nav.Link>
+                    </Nav>
                 ):
-                <ul className="nav navbar-nav navbar-right">
-                    <li ><Link to="/signup">Signup</Link></li>
-                    <li ><Link to="/signin">Signin</Link></li>
-                </ul>
+               <Nav className="ms-auto">
+                   <Nav.Link href="/signup"><p>Signup</p></Nav.Link>
+                   <Nav.Link href="/signin"><p>Signin</p></Nav.Link>
+               </Nav>
                 }
-                </div>
-            </nav>
+            </Navbar>
         )
     }
 }
@@ -44,4 +38,4 @@ function mapStateToProps(state) {
         currentUser: state.currentUser
     }
 }
-export default connect(mapStateToProps, { logout })(Navbar);
+export default connect(mapStateToProps, { logout })(NavbarComponent);

@@ -1,11 +1,11 @@
-import { Switch , Route, withRouter, Redirect} from 'react-router-dom';
+import { Switch , Route, withRouter} from 'react-router-dom';
 import { connect } from 'react-redux'
 import Homepage from "../Components/homepage";
 import AuthForm from '../Components/AuthForm'
 import { authUser } from '../store/actions/auth'
 import { removeError } from '../store/actions/error';
 import withAuth from '../hocs/withAuth'
-import MessageForm from '../Containers/messageForm'
+import MessageForm from '../Containers/messageForm' 
 
 
 const Main = props => {
@@ -28,7 +28,7 @@ const Main = props => {
                     errors={errors}
                     signUp buttonText="sign Up"
                     removeError={removeError}
-                    heading="Join Warbler Today" {...props}/>
+                    heading="Join Warbler Today!" {...props}/>
             )
         }}/>
 

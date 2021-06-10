@@ -16,32 +16,13 @@ code {
 .navbar li:hover {
   text-decoration: underline;
 }
-
-img {
-  display: inline-block;
-  width: 60px;
-  height: 40px;
-  border-radius: 2px;
-  margin-top: -10px;
-  margin-right: 4px;
-  opacity: 0.7;
-}
-
 .navbar {
-  background-image: url('./images/nav-background.png');
-  background-position: center center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  border: none;
+ background-color:#023b47;
+  padding: 5px;
 }
-.navbar-inverse .navbar-nav>li>a {
-  color:#1D054D;
-  font-weight: 500;
-  letter-spacing: 1px;
-}
+
 .navbar p{
   color: white;
-  font-weight: 700;
   letter-spacing: 1px;
 }
 .navbar p:hover{
@@ -51,15 +32,12 @@ img {
   cursor: pointer;
 }
 .home {
+  margin-top: -20px;
   width: 100vw;
   height: 100vh;
-  position: absolute;
-  top: 0;
-  bottom: 0;
   align-items:center;
   display: flex;
   flex-direction: column;
-  z-index: -1;
   background-image: url('./images/background.png');
   background-position: center center;
   background-repeat: no-repeat;
@@ -109,3 +87,34 @@ img {
   width:200px;
 }
 
+.footer {
+  background-color: #023b47;
+  padding:50px; 
+  color: white;
+}
+
+.fa-3x{
+  margin: 5px;
+}
+
+.footer input {
+  background-color:#023b47;
+  font-size: 15px;
+  border: none;
+  border-bottom: 1px #023b47 solid;
+}
+
+.footer-line{
+  margin: 10px;
+  border-radius: 20px;
+  text-shadow: 1px 3px 8px #023b47;
+}
+
+.containers{
+  font-size: 15px;
+}
+
+.containers input{
+  font-size: 12px;
+  border-radius: 5px;
+}
